@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --theme:#20062e;
+  --blue:#18b2de;
+ --white:#fff;
+ --grey:#d7d7d7;
+ --purple-grey:#8f8297;
+}
+
+body{
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(45,253,146,1) 100%) !important;
+  height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
