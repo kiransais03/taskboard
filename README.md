@@ -2,7 +2,7 @@
 
 ### Deployed Link :
 
-## (Note : Dear Sir/Madam,Apologies, I am suffering from fever and headache from 3 days,so I am not able to complete the assignment Intime.I will complete the assignment by the end of ## today (21/11/2023) and update this repository.Please consider my request)
+## (Note : Dear Sir/Madam,Apologies, I am suffering from fever and headache from 3 days,so I am not able to complete the assignment Intime.I will complete the assignment by the end of today (21/11/2023) and update this repository.Please consider my request)
 
 #### --Frontend : https://taskboard-delta.vercel.app/
 
