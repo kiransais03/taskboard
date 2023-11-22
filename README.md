@@ -26,6 +26,8 @@
 
 --Alll those changes will be reflected in the database as they are saved.Even if you logout and login again your progress will be resumed.
 
+##### ->>>>>>>All the API call formats are given in the POSTMAN Collection for easy reference to all the API calls present in this application.
+
 ### Steps Required To Run Applications :
 
 #### Frontend -React :
