@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { DndProvider } from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import update from "immutability-helper";
 import Dragdropitem from "../components/Dragdrop Item/Dragdropitem";
 import Dragdropcolumn from "../components/Dragdrop Column/Dragdropcolumn";
+import axios from "axios";
 
 const tasksList = [
   { id: 1, text: "First Task", boardno: "1" },
@@ -12,16 +13,21 @@ const tasksList = [
   { id: 4, text: "Fourth Task", boardno: "2" },
   { id: 5, text: "Fifth Task", boardno: "2" },
   { id: 6, text: "Sixth Task", boardno: "3" },
-  { id: 7, text: "Seventh Task", boardno: "4" },
-  { id: 8, text: "Eighth Task", boardno: "4" },
-  { id: 9, text: "Ninth Task", boardno: "5" },
-  { id: 10, text: "Tenth Task", boardno: "5" }
+  { id: 7, text: "Seventh Task", boardno: "3" },
+  { id: 8, text: "Eighth Task", boardno: "3" },
+  { id: 9, text: "Ninth Task", boardno: "3" },
+  { id: 10, text: "Tenth Task", boardno: "3" }
 ];
 
-const listnos = ["1", "2", "3", "4", "5"];
+const listnos = ["1", "2", "3"];
 
 const Taskboard = () => {
   const [tasks, setTasks] = useState(tasksList);
+
+  useEffect(async ()=>{
+    let response = await axios.get('');
+    setTasks(response.data)
+  },[])
 
   const [boardnos,setBoardnos] = useState(listnos);
   
