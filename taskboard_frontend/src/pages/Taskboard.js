@@ -5,32 +5,89 @@ import update from "immutability-helper";
 import Dragdropitem from "../components/Dragdrop Item/Dragdropitem";
 import Dragdropcolumn from "../components/Dragdrop Column/Dragdropcolumn";
 import axios from "axios";
-
-const tasksList = [
-  { id: 1, text: "First Task", boardno: "1" },
-  { id: 2, text: "Second Task", boardno: "1" },
-  { id: 3, text: "Third Task", boardno: "1" },
-  { id: 4, text: "Fourth Task", boardno: "2" },
-  { id: 5, text: "Fifth Task", boardno: "2" },
-  { id: 6, text: "Sixth Task", boardno: "3" },
-  { id: 7, text: "Seventh Task", boardno: "3" },
-  { id: 8, text: "Eighth Task", boardno: "3" },
-  { id: 9, text: "Ninth Task", boardno: "3" },
-  { id: 10, text: "Tenth Task", boardno: "3" }
-];
-
-const listnos = ["1", "2", "3"];
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Taskboard = () => {
-  const [tasks, setTasks] = useState(tasksList);
+  const [tasks, setTasks] = useState([]);
 
-  useEffect(async ()=>{
-    let response = await axios.get('');
-    setTasks(response.data)
+  const [boardnos,setBoardnos] = useState([]);
+
+  let navigate = useNavigate();
+
+  //For getting the task list data from backend
+  const handlegetTasklist =async ()=>{
+    try {
+     let result = await axios.get(`${process.env.REACT_APP_URL}/table/gettasklist`,{headers:{"token-taskboard":`Bearer ${localStorage.getItem('token')}`}});
+     let taskList =  result.data.taskarr;
+     setTasks([...taskList]);
+    }
+    catch(error) {
+      console.log("Error",error);
+      toast.error("Error:",error);
+    }
+  }
+
+//To initialize and get task list data as soon as the page is rendered
+  useEffect(()=>{
+    if(!localStorage.getItem('token'))
+    {
+      toast.info("Please login to go to taskboard")
+       navigate('/login')
+    }
+    else {
+    handlegetTasklist();
+    handlegetListnos();
+    }
   },[])
 
-  const [boardnos,setBoardnos] = useState(listnos);
+
+  //For updating the task list in backend whenenver any operation is done across the boards
+  const handleupdateTasklist = async (updatedTasklistarr)=>{
+    try {
+    let result = await axios.post(`${process.env.REACT_APP_URL}/table/updatetasklist`,{"taskarr":updatedTasklistarr},{headers:{"token-taskboard":`Bearer ${localStorage.getItem('token')}`}});
+    console.log("tasklist updated successfully")
+  }
+    catch(error) {
+      console.log("Error",error);
+      toast.error("Error:",error)
+    }
+  }
+
+
+  //To get the list of bordnos as soon as the page is rendered
+ const handlegetListnos = async ()=>{
+  try {
+    let result = await axios.get(`${process.env.REACT_APP_URL}/table/getlistnos`,{headers:{"token-taskboard":`Bearer ${localStorage.getItem('token')}`}});
+    let listnosobjarr =  result.data.listnosobj;
+    let boardnosArr = listnosobjarr.map((elemObj,index)=>{
+       return elemObj.nos;
+    })
+     setBoardnos([...boardnosArr]);
+  }
+    catch(error) {
+      console.log("Error",error);
+      toast.error("Error:",error)
+    }
+ }
+
+
+ //To update the boardlistnos in backend whenever we delete any board
+ const handleupdateListnos = async (updatedListnosarr)=>{
+  try {
+    let newboardnosArrobj = updatedListnosarr.map((elem,index)=>{
+      return {"nos":elem};
+    })
+  let result = await axios.post(`${process.env.REACT_APP_URL}/table/updatelistnos`,{"listobjarr":newboardnosArrobj},{headers:{"token-taskboard":`Bearer ${localStorage.getItem('token')}`}});
+  console.log("listnosboard updated successfully")
+}
+  catch(error) {
+    console.log("Error",error);
+    toast.error("Error:",error)
+  }
+}
   
+//To update the state when we drag and draop a card.
   const changeTaskboardno = useCallback(
     (id, boardno) => {
       let task = tasks.find(task => task.id === id);
@@ -40,8 +97,11 @@ const Taskboard = () => {
         [taskIndex]: { $set: task }
       });
       setTasks(newTasks);
+      handleupdateTasklist(newTasks);
     },[tasks])
 
+
+    //To add and update when an card is added to any board by clicking on Add item
     const handleAdditem = (num)=>{
       let textEntered = prompt("Enter text");
       if(textEntered) {
@@ -49,27 +109,32 @@ const Taskboard = () => {
       {
         return [...prevState,{id: tasks.length+1, text: textEntered, boardno: num}]
       });
+      handleupdateTasklist([...tasks,{id: tasks.length+1, text: textEntered, boardno: num}])
     }
     }
 
-
+    //To update whenever an card item is clicked on Check box and to delete it from the list as it completed
     const handleItemchecked = (item)=>{
       let modifiedList = tasks.filter((obj)=>{return obj.id!==item.id});
       console.log(tasks)
       setTasks([...modifiedList])
+      handleupdateTasklist([...modifiedList])
     }
 
-
+//Updating the boardnos list wheneer a new board list is added
     const handleCreatelist = ()=>{
       let newListnum = boardnos.length+1;
       boardnos.push(""+newListnum)
       setBoardnos([...boardnos])
       console.log("clicked",boardnos)
+      handleupdateListnos([...boardnos])
     }
 
+    //To update the board list whenever a board is deleted 
     const handleDeletelist = ()=>{
       boardnos.pop();
       setBoardnos([...boardnos]);
+      handleupdateListnos([...boardnos]);
     }
     
     return (

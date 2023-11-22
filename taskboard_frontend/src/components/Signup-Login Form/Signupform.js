@@ -36,7 +36,7 @@ function Signupform () {
               toast.success('Signup Successful');
 
               console.log("Signup Successfull.")
-             navigate1("/");
+             navigate1("/login");
               
     }
     catch(error){

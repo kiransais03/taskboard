@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const pages = ['Home', 'Login', 'Signup', 'Taskboard'];
 const settings = ['Logout'];
@@ -21,6 +22,8 @@ const settings = ['Logout'];
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const [dummyrender,setDummyrender] = useState([]);
 
   let navigate = useNavigate();
 
@@ -40,6 +43,13 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogout = ()=>{
+      localStorage.removeItem('token');
+      localStorage.removeItem('email');
+      toast.success("Your account logged out successfully");
+      navigate('/home');
+  }
 
   return (
     <AppBar position="static">
@@ -135,7 +145,7 @@ function Navbar() {
 
           <Box sx={{ flexGrow: 0 }}>
             {localStorage.getItem('token') && 
-              <button className='btn btn-warning'>Logout</button>
+              <button onClick={handleLogout} className='btn btn-warning'>Logout</button>
             }
             
             <Menu
