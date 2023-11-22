@@ -7,7 +7,7 @@ import Homepage from './pages/Homepage/Homepage';
 import Navbar from './components/Navbar/Navbar';
 import Loginpage from "./pages/Loginpage/Loginpage";
 import Signuppage from "./pages/Singuppage/Signuppage";
-import Taskboardpage from './pages/Taskboardpage/Taskboardpage';
+import Taskboard from './pages/Taskboard';
 
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
         <Route path='/home' element={<Homepage/>}/>
         <Route path='/login' element={<Loginpage/>}/>
         <Route path='/signup' element={<Signuppage/>}/>
-        <Route path='/taskboard' element={<Taskboardpage/>}/>
+        <Route path='/taskboard' element={<Taskboard/>}/>
       </Routes>
     </div>
   );

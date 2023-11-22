@@ -19,10 +19,13 @@ function Homepage() {
           <h1 className='headingtext' style={{textAlign:"center"}}>"Task Board: Where Ideas Meet Action."</h1>
           <h3 style={{textAlign:"center"}}>Bridge the gap between inspiration and execution.<br/> With our task board, ideas seamlessly transition into action,<br/> bringing your visions to life.</h3>
       </div>
-       <div className='d-flex flex-column row-gap-3'>
+      {!localStorage.getItem('token')?<div className='d-flex flex-column row-gap-3'>
             <button type="button" onClick={()=>{navigate('/login')}} className="btn btn-primary">Login</button> <br/>
             <button type="button" onClick={()=>{navigate('/signup')}} className="btn btn-warning">Signup</button>
-      </div>
+      </div>    :<div className='d-flex flex-column row-gap-3'> <h4 style={{textAlign:"center"}}>Already Logged In.Click to go to</h4> 
+      <button type="button" onClick={()=>{navigate('/taskboard')}} className="btn btn-primary">Taskboard</button>
+       </div> }
+       
       </div>
     </div>
   )
