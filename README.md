@@ -2,15 +2,29 @@
 
 ### Deployed Link :
 
-## (Note : Dear Sir/Madam,Apologies, I am suffering from fever and headache from 3 days,so I am not able to complete the assignment Intime.I will complete the assignment by the end of today (21/11/2023) and update this repository.Please consider my request)
-
 #### --Frontend : https://taskboard-delta.vercel.app/
+
+#### --Backend : https://taskboard-backend-2ryj.onrender.com/
 
 ### Video Recording & Screenshots Of Website Overview : Googledrive Link : Will Be Updated
 
-##### Technologies Used : MERN(MongoDb,Express,React.js,Node.js),Bootstrap,Material UI
+##### Technologies Used : Postgres SQL,Express,React.js,Node.js,Bootstrap,Material UI
 
 #### Dev Tools : VS Code,Github,Vercel,Render
+
+### Steps For Website Navigation And Explanation of Different features :
+
+--First Landing Page will be displayed with the options Login/Singnup
+
+--User can create an account using SignUp and Login to his account.User account details will be store in Backend in Postgres SQL database which is hosted on Elephant SQL
+
+--After logging in user will be navigated to taskboard page.In it some default tasks cards are displayed.This taskboard done by using "react-dnd" npm librarry
+
+--We can swap one card from one list to another.After the task has been completed we can mark the Checkbox and it will be deleted from the database as well.
+
+--WE can also delete the List Board by clicking on the BIN symbol on the last List.And also we can add the new card by clicking on the Click to Add item on the respective Lists
+
+--Alll those changes will be reflected in the database as they are saved.Even if you logout and login again your progress will be resumed.
 
 ### Steps Required To Run Applications :
 
